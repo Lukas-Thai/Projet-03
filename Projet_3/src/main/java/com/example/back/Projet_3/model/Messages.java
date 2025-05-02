@@ -19,7 +19,7 @@ public class Messages {
     private Rentals rental;
     @ManyToOne
     @JoinColumn(name="user_id")
-    private Users onwer;
+    private Users sender;
     private String message;
 	private LocalDateTime created_at;
     private LocalDateTime updated_at;
@@ -35,11 +35,11 @@ public class Messages {
 	public void setRental(Rentals rental) {
 		this.rental = rental;
 	}
-	public Users getOnwer() {
-		return onwer;
+	public Users getSender() {
+		return sender;
 	}
-	public void setOnwer(Users onwer) {
-		this.onwer = onwer;
+	public void setSender(Users sender) {
+		this.sender = sender;
 	}
 	public String getMessage() {
 		return message;
