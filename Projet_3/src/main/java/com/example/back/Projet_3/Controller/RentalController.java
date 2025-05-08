@@ -63,7 +63,7 @@ public class RentalController {
 		return ResponseEntity.ok(InfoBuilder.rentalInfoBuilder(rent));
 	}
 	
-	@PostMapping
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Map<String, String>> createRental(
 	    @RequestHeader("Authorization") String authHeader,
 	    @RequestPart("name") String name,

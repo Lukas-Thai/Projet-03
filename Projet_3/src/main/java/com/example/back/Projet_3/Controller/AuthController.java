@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,9 @@ import com.example.back.Projet_3.model.Users;
 import com.example.back.Projet_3.services.JWTService;
 import com.example.back.Projet_3.services.UserService;
 
+import dto.LoginRequest;
 import helper.InfoBuilder;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -40,7 +40,7 @@ public class AuthController {
 	    @PostMapping("/register")
 	    @Operation(summary = "Allow the user to register an account")
 	    @ApiResponses(value = {@ApiResponse(responseCode= "200", description="Register Successful")})
-	    public ResponseEntity<Map<String, String>> register(@RequestBody(description = "the user to register", required = true) Users user) {
+	    public ResponseEntity<Map<String, String>> register(@RequestBody Users user) {
 	    	try {
 		        Users RegisteredUser = userService.registerUser(user);
 		        String token = jwtService.generateTokenForUser(RegisteredUser);
@@ -53,9 +53,11 @@ public class AuthController {
 	    }
 
 	    @PostMapping("/login")
-	    public ResponseEntity<Map<String, String>> login(@RequestBody Users loginRequest) {
+	    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
 	        Users user = userService.findByEmail(loginRequest.getEmail()).orElse(null);
 	        if(user==null) {
+	        	System.out.println(loginRequest.getEmail());
+	        	System.out.println(loginRequest.getPassword());
 	    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "L'email ou le mot de passe est erroné"));
 	        }
 
