@@ -20,14 +20,15 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
     
-    public Optional<Users> findByEmail(String email) {
+    public Optional<Users> findByEmail(String email) {//cherche un utilisateur à partir de son email
         return usersRepository.findByEmail(email);
     }
-    public Optional<Users> findById(Integer id) {
+    public Optional<Users> findById(Integer id) {//cherche un utilisateur à partir de son id
         return usersRepository.findById(id);
     }
-    public Users registerUser(Users user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public Users registerUser(Users user) {//enregistre un utilisateur en bd
+    	user.setEmail(user.getEmail().trim());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));//hashage du mnot de passe 
         user.setCreated_at(LocalDateTime.now());
         return usersRepository.save(user);
     }

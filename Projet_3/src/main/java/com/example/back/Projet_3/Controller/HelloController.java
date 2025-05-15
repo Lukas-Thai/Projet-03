@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 public class HelloController {
 	@Hidden
     @GetMapping("/")
-    public String hello() {
+    public String hello() {//controlleur permettant de maintenir le serveur
         return "Server is running!";
     }
 }

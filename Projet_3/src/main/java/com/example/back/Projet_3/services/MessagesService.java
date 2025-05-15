@@ -16,7 +16,7 @@ public class MessagesService {
 		this.messageRep = mr;
 	}
 	
-	public Messages createMessage(Users user, Rentals rental, String content) {
+	public Messages createMessage(Users user, Rentals rental, String content) {//enregistre un message en base de données
 		Messages newMes = new Messages();
 		newMes.setSender(user);
 		newMes.setRental(rental);

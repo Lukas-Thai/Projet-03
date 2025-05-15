@@ -25,19 +25,19 @@ public class RentalsService {
 	public RentalsService(RentalsRepository rentalsRep) {
 		this.rentalsRep = rentalsRep;
 	}
-	public List<Rentals> getAllRentals(){
+	public List<Rentals> getAllRentals(){//retourne tout les rentals en BD
 		return rentalsRep.findAll();
 	}
-	public Optional<Rentals> getRentalsById(Integer id) {
+	public Optional<Rentals> getRentalsById(Integer id) {//cherche un rental avec un id fourni
 		return rentalsRep.findById(id);
 	}
-	public Rentals registerRental(RentalRequest rentReq, Users user, MultipartFile file) {
+	public Rentals registerRental(RentalRequest rentReq, Users user, MultipartFile file) {//enregistre un rental
 		Rentals rent = new Rentals();
 		rent.setName(rentReq.getName());
 		rent.setPrice(rentReq.getPrice());
 		rent.setSurface(rentReq.getSurface());
 		rent.setOwner(user);
-		if (file != null && !file.isEmpty()) {
+		if (file != null && !file.isEmpty()) {//si une image a été fourni avec le rental, on l'enregistre sur le serveur
 	        try {
 	            String uploadDir = "uploads/";
 	            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
@@ -52,7 +52,7 @@ public class RentalsService {
 	            rent.setPicture(""); 
 	        }
 	    } else {
-	        rent.setPicture("");
+	        rent.setPicture("");//sinon on laisse vide
 	    }
 
 		if(rentReq.getDescription()==null) {
@@ -62,10 +62,10 @@ public class RentalsService {
 			rent.setDescription(rentReq.getDescription());
 		}
 		rent.setCreated_at(LocalDateTime.now());
-		return this.rentalsRep.save(rent);
+		return this.rentalsRep.save(rent);//on sauvegarde le tout en bd
 	}
-	public Rentals updateRentals(RentalRequest rent, Rentals old) {
-		if(rent.getName()!=null) {
+	public Rentals updateRentals(RentalRequest rent, Rentals old) {//met à jour un rental
+		if(rent.getName()!=null) {//on écrase les informations de l'ancien rental avec les nouvelles
 			old.setName(rent.getName());
 		}
 		if(rent.getSurface()!=null) {
@@ -73,9 +73,6 @@ public class RentalsService {
 		}
 		if(rent.getPrice()!=null) {
 			old.setPrice(rent.getPrice());
-		}
-		if(rent.getPicture()!=null) {
-			old.setPicture(rent.getPicture());
 		}
 		if(rent.getDescription()!=null) {
 			old.setDescription(rent.getDescription());

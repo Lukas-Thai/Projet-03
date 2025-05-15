@@ -1,17 +1,13 @@
 package dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RentalRequest {
 	private String name;
 	private Float surface;
 	private Float price;
 	private String description;
-	private String picture;
-	public String getPicture() {
-		return picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
+	private MultipartFile picture;
 	public String getName() {
 		return name;
 	}
@@ -35,5 +31,11 @@ public class RentalRequest {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public MultipartFile getPicture() {
+		return picture;
+	}
+	public void setPicture(MultipartFile picture) {
+		this.picture = picture;
 	}
 }

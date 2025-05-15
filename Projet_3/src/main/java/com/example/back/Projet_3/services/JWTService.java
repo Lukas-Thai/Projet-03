@@ -3,7 +3,6 @@ package com.example.back.Projet_3.services;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -25,41 +24,34 @@ public class JWTService {
 		this.jwtEncode = jwt;
 		this.jwtDecode = jwtDecode;
 	}
-	public String generateToken(Authentication authentication) {
-		Instant now = Instant.now();
-		JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self").issuedAt(now).expiresAt(now.plus(3, ChronoUnit.DAYS)).subject(authentication.getName()).build();
-		JwtEncoderParameters jwtParams = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(),claims);
-		return this.jwtEncode.encode(jwtParams).getTokenValue();
-	}
-	public String generateTokenForUser(Users user) {
+	public String generateTokenForUser(Users user) {//génère un token pour l'utilisateur fourni
 	    Instant now = Instant.now();
 	    
-	    // You can choose what to put in the subject, like the username or email
-	    String subject = user.getEmail(); // or user.getEmail() if you prefer
+	    String subject = user.getEmail(); 
 	    
-	    // Set the JWT claims, including the subject, issuer, issued date, and expiration
+	    //on spécifie les caractéristiques du token
 	    JwtClaimsSet claims = JwtClaimsSet.builder()
-	            .issuer("self")  // Issuer (you can change this to your app name)
-	            .issuedAt(now)  // Token issue time
-	            .expiresAt(now.plus(3, ChronoUnit.DAYS))  // Token expiration (3 days)
-	            .subject(subject)  // Subject: usually a unique identifier for the user
+	            .issuer("self")
+	            .issuedAt(now)  
+	            .expiresAt(now.plus(3, ChronoUnit.DAYS)) 
+	            .subject(subject) 
 	            .build();
 	    
-	    // Prepare the JWT header (specifying the signing algorithm)
+	    //on définit l'algorithme du token
 	    JwtEncoderParameters jwtParams = JwtEncoderParameters.from(
-	            JwsHeader.with(MacAlgorithm.HS256).build(),  // Set the algorithm (HS256 in this case)
+	            JwsHeader.with(MacAlgorithm.HS256).build(),  
 	            claims
 	    );
 	    
-	    // Encode and return the token
+	    //on le créer avec les paramètres fournis
 	    return this.jwtEncode.encode(jwtParams).getTokenValue();
 	}
 	public String verifyToken(String token) {
 		try {
-			Jwt decodedJwt = jwtDecode.decode(token);
+			Jwt decodedJwt = jwtDecode.decode(token);//si le token est valide on retourne son mail
 			return decodedJwt.getSubject();
 		}catch(Exception e) {
-			return "";
+			return "";//sinon on retourne rien
 		}
 	}
 }
