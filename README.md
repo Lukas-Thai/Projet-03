@@ -5,3 +5,7 @@
 - Entrez les identifiants pour se connecter à la base de données (spring.datasource.username et spring.datasource.password), changez l'adresse, le port ainsi que le nom de la base de données si nécessaire (spring.datasource.url).
 - Lancez le serveur depuis le fichier Projet_3\src\main\java\com\example\back\Projet_3.java .
 - Lancez le front depuis le fichier Developpez-le-back-end-en-utilisant-Java-et-Spring en tappant la commande ```npm start```.
+
+# URL du Swagger
+
+localhost:8080/swagger-ui/index.html
