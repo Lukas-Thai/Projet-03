@@ -9,6 +9,6 @@ public class RessourceConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {//permet à l'utilisateur de récupérer les images upload
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/");
+        	.addResourceLocations("file:uploads/");
     }
 }
